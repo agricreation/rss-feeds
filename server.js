@@ -12,13 +12,10 @@ app.get('/', (req, res) => {
   res.send('Welcome');
 });
 
-app.listen(1000, () => {
-  console.log('Listening on port 1000');
-});
-
 const rssFeeds = [
-  { name: 'Gadget360', url: 'https://www.gadgets360.com/rss/feeds' },
-  { name: 'nineToFiveMac', url: 'https://9to5mac.com/feed/' },
+  { name: 'Gadget 360', url: 'https://www.gadgets360.com/rss/feeds' },
+  { name: '9 to 5 mac', url: 'https://9to5mac.com/feed/' },
+  // Add more websites and RSS feed URLs as needed
 ];
 
 const previousItemGuids = {};
@@ -26,12 +23,12 @@ const previousItemGuids = {};
 async function fetchRssFeed(rssFeedUrl) {
   try {
     const feed = await parser.parseURL(rssFeedUrl);
-    console.log(feed);
     return feed;
   } catch (error) {
     console.error(`Error fetching RSS feed for ${rssFeedUrl}:`, error);
   }
 }
+
 async function sendMessageToDiscord(message) {
   try {
     const webhookClient = new WebhookClient({ url: webhookUrl });
@@ -67,10 +64,20 @@ async function processRssFeed(webhookName, rssFeedUrl) {
 }
 
 async function main() {
-  for (let i = 0; i < rssFeeds.length; i++) {
-    const { name, url } = rssFeeds[i];
-    await processRssFeed(name, url);
+  try {
+    for (let i = 0; i < rssFeeds.length; i++) {
+      const { name, url } = rssFeeds[i];
+      await processRssFeed(name, url);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  } finally {
+    setTimeout(main, 5000); // Schedule next execution after 5 minutes
   }
 }
 
-setInterval(main, 5000); 
+const port = process.env.PORT || 1000;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+  main();
+});
