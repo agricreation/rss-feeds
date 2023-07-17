@@ -11,7 +11,7 @@ const timerTimeout =process.env.TIMER_TIMEOUT;
 app.get('/', (req, res) => {
   res.send('Welcome');
 });
-
+console.log(timerTimeout);
 const rssFeeds = [
   { name: 'Gadget 360', url: 'https://www.gadgets360.com/rss/feeds' },
   { name: '9 to 5 mac', url: 'https://9to5mac.com/feed/' },
