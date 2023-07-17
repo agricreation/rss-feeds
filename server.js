@@ -7,7 +7,7 @@ const { WebhookClient } = require('discord.js');
 require('dotenv').config();
 
 const webhookUrl = process.env.WEBHOOK_URL;
-
+const timerTimeout =process.env.TIMER_TIMEOUT;
 app.get('/', (req, res) => {
   res.send('Welcome');
 });
@@ -15,6 +15,23 @@ app.get('/', (req, res) => {
 const rssFeeds = [
   { name: 'Gadget 360', url: 'https://www.gadgets360.com/rss/feeds' },
   { name: '9 to 5 mac', url: 'https://9to5mac.com/feed/' },
+  { name: '9 to 5 google', url: 'https://9to5google.com/feed/' },
+  { name: 'The Verge', url: 'https://www.theverge.com/rss/index.xml' },
+  { name: 'The economic time', url: 'https://economictimes.indiatimes.com/rssfeeds/13357270.cms' },
+  { name: 'News 18 tech', url: 'https://www.news18.com/rss/tech.xml' },
+  { name: 'Business today', url: 'https://www.businesstoday.in/rssfeeds/?id=home' },
+  { name: 'Beembom tech', url: 'https://beebom.com/category/tech//feed' },
+  { name: 'Tech news world', url: 'https://www.technewsworld.com/feed/' },
+  { name: 'Tech Crunch', url: 'https://techcrunch.com/feed/' },
+  { name: 'Gizmod', url: 'https://gizmodo.com/rss' },
+  { name: 'Gizmo china', url: 'https://www.gizmochina.com/feed/' },
+  { name: 'Venruter beat', url: 'https://feeds.feedburner.com/venturebeat/SZYF' },
+  { name: 'Digital trend', url: 'https://www.digitaltrends.com/feed/' },
+  { name: 'Mashable', url: 'https://in.mashable.com/tech.xml' },
+  { name: 'The information', url: 'https://www.theinformation.com/feed' },
+  { name: 'Engadget', url: 'https://www.engadget.com/rss.xml' },
+  { name: 'Arstechnica', url: 'https://arstechnica.com/gadgets/feed/' },
+  // { name: 'Engadget', url: 'news' },
   // Add more websites and RSS feed URLs as needed
 ];
 
@@ -72,7 +89,7 @@ async function main() {
   } catch (error) {
     console.error('An error occurred:', error);
   } finally {
-    setTimeout(main, 5000); // Schedule next execution after 5 minutes
+    setTimeout(main, timerTimeout || 300000); // Time shedule timer
   }
 }
 
